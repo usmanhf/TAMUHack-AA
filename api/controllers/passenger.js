@@ -36,7 +36,7 @@ function createPassenger(req, res) {
     record.gender = _.get(req, "swagger.params.gender.value");
     record.email = _.toLower(_.get(req, "swagger.params.email.value"));
     record.aadvantageId = _.get(req, "swagger.params.aadvantageNumber.value");
-    record.seatChoice = _.get(req, "swagger.params.seatChoice.value");
+    /*record.seatChoice = _.get(req, "swagger.params.seatChoice.value");
     record.flightClass = _.get(req, "swagger.params.flightClass.value");
     record.talk = _.get(req, "swagger.params.talk.value");
     /*var randSeat = Math.floor(Math.random()*2);
@@ -69,7 +69,7 @@ function createPassenger(req, res) {
         return;
     }
 
-    if(record.firstName && record.lastName && record.gender && record.email && record.flightClass && record.seatChoice && record.talk) {
+    if(record.firstName && record.lastName && record.gender && record.email /*&& record.flightClass && record.seatChoice && record.talk*/) {
         if (!record.aadvantageId) {
             record.aadvantageId = createAadvantageId();
         }
