@@ -278,9 +278,9 @@ definitions:
       - lastName
       - gender
       - email
-      - talk
-      - flightClass
-      - seatChoice
+      #- talk
+      #- flightClass
+      #- seatChoice
     properties:
       firstName:
         type: string
@@ -294,12 +294,12 @@ definitions:
         type: string
       id:
         type: string
-      seatChoice:
-        $ref: "#/definitions/SeatChoice"
-      flightClass:
-        $ref: "#/definitions/FlightClass"
-      talk:
-        $ref: "#/definitions/Talk"
+      #seatChoice:
+      #  $ref: "#/definitions/SeatChoice"
+      #flightClass:
+      #  $ref: "#/definitions/FlightClass"
+      #talk:
+      #  $ref: "#/definitions/Talk"
   Reservation:
     required:
       - recordLocator
