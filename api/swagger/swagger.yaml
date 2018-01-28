@@ -88,6 +88,23 @@ paths:
           description: AAdvantage number
           required: false
           type: string
+        - name: seatChoice
+          in: query
+          description: seat choice
+          required: false
+          type: string
+          enum: ["window", "aisle"]
+        - name: flightClass
+          in: query
+          description: flight class
+          required: false
+          enum: ["F", "B", "E"]
+        - name: talk
+          in: query
+          description: talking or not
+          required: false
+          type: string
+          enum: ["yes", "no"]
       responses:
         "200":
           description: Passenger created
@@ -274,6 +291,12 @@ definitions:
         type: string
       id:
         type: string
+      seatChoice:
+        $ref: "#/definitions/SeatChoice"
+      flightClass:
+        $ref: "#/definitions/FlightClass"
+      talk:
+        $ref: "#/definitions/Talk"
   Reservation:
     required:
       - recordLocator
@@ -338,3 +361,19 @@ definitions:
       - Male
       - Female
       - Other
+  SeatChoice:
+    type: string
+    enum:
+      - window
+      - aisle
+  FlightClass:
+    type: string
+    enum:
+      - F
+      - B
+      - E
+  Talk:
+    type: string
+    enum:
+      - yes
+      - no

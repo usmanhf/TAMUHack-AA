@@ -36,6 +36,9 @@ function createPassenger(req, res) {
     record.gender = _.get(req, "swagger.params.gender.value");
     record.email = _.toLower(_.get(req, "swagger.params.email.value"));
     record.aadvantageId = _.get(req, "swagger.params.aadvantageNumber.value");
+    record.seatChoice = _.get(req, "swagger.params.seatChoice.value");
+    record.flightClass = _.get(req, "swagger.params.flightClass.value");
+    record.talk = _.get(req, "swagger.params.talk.value");
 
     if (!emailValidator.validate(record.email)) {
         res.status(400).json({"error": "Invalid email address"});
@@ -46,6 +49,32 @@ function createPassenger(req, res) {
         if (!record.aadvantageId) {
             record.aadvantageId = createAadvantageId();
         }
+        var randSeat = Math.floor(Math.random()*2);
+        if(randSeat == 0) {
+          record.seatChoice = "window";
+        }
+        else {
+          record.seatChoice = "aisle";
+        }
+        var randTalk = Math.floor(Math.random()*2);
+        if(randTalk == 0) {
+          record.talk = "yes";
+        }
+        else {
+          record.talk = "no";
+        }
+
+        var randClass = Math.floor(Math.random()*6);
+        if(randClass == 0) {
+          record.flightClass = "F";
+        }
+        else if (randClass < 4) {
+          record.seatChoice = "B";
+        }
+        else {
+          record.seatChoice = "E";
+        }
+
 
         let passengers = mongoHelper.getDb().collection("passenger");
         try {
