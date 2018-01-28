@@ -39,7 +39,7 @@ function createPassenger(req, res) {
     record.seatChoice = _.get(req, "swagger.params.seatChoice.value");
     record.flightClass = _.get(req, "swagger.params.flightClass.value");
     record.talk = _.get(req, "swagger.params.talk.value");
-    /*var randSeat = Math.floor(Math.random()*2);
+    var randSeat = Math.floor(Math.random()*2);
     if(randSeat == 0) {
       record.seatChoice = _."window";
     }
@@ -63,13 +63,13 @@ function createPassenger(req, res) {
     }
     else {
       record.seatChoice = "E";
-    }*/
+    }
     if (!emailValidator.validate(record.email)) {
         res.status(400).json({"error": "Invalid email address"});
         return;
     }
 
-    if(record.firstName && record.lastName && record.gender && record.email) {
+    if(record.firstName && record.lastName && record.gender && record.email && record.flightClass && record.seatChoice && record.talk) {
         if (!record.aadvantageId) {
             record.aadvantageId = createAadvantageId();
         }
