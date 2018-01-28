@@ -41,7 +41,7 @@ function createPassenger(req, res) {
     record.talk = _.get(req, "swagger.params.talk.value");
     var randSeat = Math.floor(Math.random()*2);
     if(randSeat == 0) {
-      record.seatChoice = _."window";
+      record.seatChoice = "window";
     }
     else {
       record.seatChoice = "aisle";
