@@ -13,8 +13,8 @@ module.exports = {
 function setup() {
     // Perform any DB setup functions here
     let promises = [];
-    let userPromise = new Promise(function(resolve, reject) {
-        _db.collection("user").createIndex({"email": 1}, {"unique": true}, function(err, response) {
+    let passengerPromise = new Promise(function(resolve, reject) {
+        _db.collection("passenger").createIndex({"email": 1}, {"unique": true}, function(err, response) {
             if (err) {
                 reject();
                 console.log(err);
@@ -23,7 +23,7 @@ function setup() {
             resolve();
         });
     });
-    promises.push(userPromise);
+    promises.push(passengerPromise);
 
     let flightsPromise = new Promise(function(resolve, reject) {
         _db.collection("flight").createIndex({"flightNumber": 1, "departureTime": 1}, {"unique": true}, function(err, response) {

@@ -11,20 +11,20 @@ module.exports = {
 };
 
 
-function user(req, res) {
+function passenger(req, res) {
     var email = _.toLower(req.swagger.params.email.value);
-    let users = mongoHelper.getDb().collection("user");
+    let passengers = mongoHelper.getDb().collection("passenger");
     try {
-        users.findOne({email: email}, function(err, record) {
+        passengers.findOne({email: email}, function(err, record) {
             if (err || record == null) {
-                res.status(400).json({"error": "User could not be found"});
+                res.status(400).json({"error": "Passenger could not be found"});
                 console.log(err);
                 return;
             };
             res.json(record);
         });
     } catch(err) {
-        res.status(400).json({"error": "Something went wrong looking for user"});
+        res.status(400).json({"error": "Something went wrong looking for passenger"});
     }
 };
 

@@ -6,30 +6,30 @@ const randomstring      = require('randomstring');
 const emailValidator    = require('email-validator');
 
 module.exports = {
-    user: user,
-    createUser: createUser,
-    retrieveUser: retrieveUser
+    passenger: passenger,
+    createPassenger: createPassenger,
+    retrievePassenger: retrievePassenger
 };
 
-function user(req, res) {
+function passenger(req, res) {
     var email = _.toLower(req.swagger.params.email.value);
-    console.log("Looking for user: ", email);
-    let users = mongoHelper.getDb().collection("user");
+    console.log("Looking for passenger: ", email);
+    let passengers = mongoHelper.getDb().collection("passenger");
     try {
-        users.findOne({"email": email}, function(err, record) {
+        passengers.findOne({"email": email}, function(err, record) {
             if (err || record == null) {
-                res.status(400).json({"error": "User could not be found"});
+                res.status(400).json({"error": "Passenger could not be found"});
                 console.log(err);
                 return;
             };
             res.json(record);
         });
     } catch(err) {
-        res.status(400).json({"error": "Something went wrong looking for user"});
+        res.status(400).json({"error": "Something went wrong looking for passenger"});
     }
 };
 
-function createUser(req, res) {
+function createPassenger(req, res) {
     var record = {};
     record.firstName = _.get(req, "swagger.params.firstName.value");
     record.lastName = _.get(req, "swagger.params.lastName.value");
@@ -47,31 +47,31 @@ function createUser(req, res) {
             record.aadvantageId = createAadvantageId();
         }
 
-        let users = mongoHelper.getDb().collection("user");
+        let passengers = mongoHelper.getDb().collection("passenger");
         try {
-            users.insertOne(record, function(err, response) {
-                let user = _.get(response, "ops[0]");
-                if (err || !user) {
-                    res.status(400).json({"error": "User could not be created", "reason": err});
+            passengers.insertOne(record, function(err, response) {
+                let passenger = _.get(response, "ops[0]");
+                if (err || !passenger) {
+                    res.status(400).json({"error": "Passenger could not be created", "reason": err});
                     console.log(err);
                     return;
                 };
-                res.json(user);
+                res.json(passenger);
             });
         } catch(err) {
-            res.status(400).json({"error": "Something went wrong creating user"});
+            res.status(400).json({"error": "Something went wrong creating passenger"});
         }
     } else {
-        res.status(400).json({"error": "User could not be created; required fields missing"});
+        res.status(400).json({"error": "Passenger could not be created; required fields missing"});
     }
 }
 
-function retrieveUser(userId) {
-    let users = mongoHelper.getDb().collection("user");
+function retrievePassenger(passengerId) {
+    let passengers = mongoHelper.getDb().collection("passenger");
     return new Promise(function(resolve, reject) {
         try {
-            userId = new mongo.ObjectID(userId);
-            users.findOne({"_id": userId}, function(err, record) {
+            passengerId = new mongo.ObjectID(passengerId);
+            passengers.findOne({"_id": passengerId}, function(err, record) {
                 if (err) {
                     reject(err);
                     return null;

@@ -16,7 +16,7 @@ if (process.env.MONGODB_URI) {
     let re = /mongodb:\/\/([A-z0-9]+):([A-z0-9]+)@(.*):([0-9]+)\/([A-z0-9]+)/g;
     var groups = re.exec(process.env.MONGODB_URI);
     try {
-        config.user         = groups[1];
+        config.passenger         = groups[1];
         config.password     = groups[2];
         config.host         = groups[3];
         config.port         = groups[4];
@@ -32,8 +32,8 @@ if (process.env.MONGODB_URI) {
 
 
 let mockDataFiles = {
-    "users.json": {
-        "collection": "user",
+    "passengers.json": {
+        "collection": "passenger",
         "comparisonField": "email"
     },
     "airports.json": {
@@ -48,8 +48,8 @@ let flightDataPath = mockDir + "/flights/";
 function importGeneral() {
     _.forEach(mockDataFiles, function(info, file) {
         var command = "mongoimport " + "--host=" + config.host + " --port=" + config.port;
-        if (config.user) {
-            command += " -u " + config.user
+        if (config.passenger) {
+            command += " -u " + config.passenger
         }
         if (config.password) {
             command += " -p " + config.password
@@ -127,8 +127,8 @@ function recursiveImportFlightsFiles(files, path, currFileIndex) {
 
         // console.log("Importing ", file, "(", currFileIndex + 1, "/", files.length, ")");
         var command = "mongoimport " + "--host=" + config.host + " --port=" + config.port;
-        if (config.user) {
-            command += " -u " + config.user
+        if (config.passenger) {
+            command += " -u " + config.passenger
         }
         if (config.password) {
             command += " -p " + config.password
@@ -166,6 +166,6 @@ function startImport() {
             reject();
         });
     });
-    
+
     return importPromise;
 }

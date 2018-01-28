@@ -34,13 +34,13 @@ paths:
           description: Error populating DB
           schema:
             type: string
-  /user:
-    x-swagger-router-controller: user
+  /passenger:
+    x-swagger-router-controller: passenger
     get:
-      description: Returns a user object matching the specified information
+      description: Returns a passenger object matching the specified information
       tags:
-        - User
-      operationId: user
+        - Passenger
+      operationId: passenger
       parameters:
         - name: email
           in: query
@@ -49,18 +49,18 @@ paths:
           type: string
       responses:
         "200":
-          description: User found
+          description: Passenger found
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/Passenger"
         "400":
-          description: User could not be found
+          description: Passenger could not be found
           schema:
             type: string
     post:
-      description: Creates a user object with the specified data
+      description: Creates a passenger object with the specified data
       tags:
-        - User
-      operationId: createUser
+        - Passenger
+      operationId: createPassenger
       parameters:
         - name: firstName
           in: query
@@ -90,11 +90,11 @@ paths:
           type: string
       responses:
         "200":
-          description: User created
+          description: Passenger created
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/Passenger"
         "400":
-          description: User could not be created
+          description: Passenger could not be created
           schema:
             type: string
   /reservation:
@@ -126,9 +126,9 @@ paths:
         - Reservation
       operationId: createReservation
       parameters:
-      - name: userId
+      - name: passengerId
         in: query
-        description: User ID
+        description: Passenger ID
         required: true
         type: string
       - name: flightIds
@@ -255,7 +255,7 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  User:
+  Passenger:
     required:
       - firstName
       - lastName

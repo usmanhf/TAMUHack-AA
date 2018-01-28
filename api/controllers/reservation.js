@@ -2,7 +2,7 @@
 const _                 = require('lodash');
 const mongoHelper       = require('../helpers/mongoHelper');
 const randomstring      = require('randomstring');
-const users             = require('./user');
+const passengers             = require('./passenger');
 const flights           = require('./flight');
 
 module.exports = {
@@ -33,11 +33,11 @@ function reservation(req, res) {
 
 function createReservation(req, res) {
     var record = {};
-    record.userId = _.get(req, "swagger.params.userId.value");
+    record.passengerId = _.get(req, "swagger.params.passengerId.value");
     record.flightIds = _.get(req, "swagger.params.flightIds.value");
     record.recordLocator = createRecordLocator();
 
-    if(record.userId && record.flightIds && record.flightIds.length > 0) {
+    if(record.passengerId && record.flightIds && record.flightIds.length > 0) {
         let reservations = mongoHelper.getDb().collection("reservation");
         try {
             reservations.insertOne(record, function(err, response) {
@@ -50,10 +50,10 @@ function createReservation(req, res) {
                 res.json(reservation);
             });
         } catch(err) {
-            res.status(400).json({"error": "Something went wrong creating user"});
+            res.status(400).json({"error": "Something went wrong creating passenger"});
         }
     } else {
-        res.status(400).json({"error": "User could not be created; required fields missing"});
+        res.status(400).json({"error": "Passenger could not be created; required fields missing"});
     }
 }
 
@@ -100,10 +100,10 @@ function hydrateReservationResponse(reservation) {
     return new Promise(function(resolve, reject) {
         let promises = [];
         try {
-            let userPromise = users.retrieveUser(reservation.userId).then(function(userData) {
-                reservation.user = userData;
+            let passengerPromise = passengers.retrievePassenger(reservation.passengerId).then(function(passengerData) {
+                reservation.passenger = passengerData;
             });
-            promises.push(userPromise);
+            promises.push(passengerPromise);
 
             let flightsPromise = flights.retrieveFlights(reservation.flightIds).then(function(flightsData) {
                 reservation.flights = flightsData;
@@ -111,7 +111,7 @@ function hydrateReservationResponse(reservation) {
             promises.push(flightsPromise);
 
             Promise.all(promises).then(function() {
-                delete(reservation.userId);
+                delete(reservation.passengerId);
                 delete(reservation.flightIds);
                 resolve(reservation);
             }).catch(function(err) {
