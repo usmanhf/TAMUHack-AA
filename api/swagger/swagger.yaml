@@ -91,18 +91,18 @@ paths:
         - name: seatChoice
           in: query
           description: seat choice
-          required: false
+          required: true
           type: string
           enum: ["window", "aisle"]
         - name: flightClass
           in: query
           description: flight class
-          required: false
+          required: true
           enum: ["F", "B", "E"]
         - name: talk
           in: query
           description: talking or not
-          required: false
+          required: true
           type: string
           enum: ["yes", "no"]
       responses:
@@ -278,6 +278,9 @@ definitions:
       - lastName
       - gender
       - email
+      - talk
+      - flightClass
+      - seatChoice
     properties:
       firstName:
         type: string
